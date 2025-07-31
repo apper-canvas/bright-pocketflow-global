@@ -35,10 +35,10 @@ const Dashboard = () => {
       setLoading(true);
       setError("");
       
-      const currentMonth = getCurrentMonth();
+const currentMonth = getCurrentMonth();
       
       // Load budget data
-      const budgetData = await budgetService.getBudget(currentMonth);
+      const budgetData = await budgetService.getCurrentMonthBudget();
       if (budgetData) {
         setBudget(budgetData);
       }
