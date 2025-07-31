@@ -1,0 +1,122 @@
+[
+  {
+    "Id": 1,
+    "amount": -87.43,
+    "categoryId": 1,
+    "merchant": "Whole Foods Market",
+    "note": "Weekly groceries",
+    "date": "2024-01-15T10:30:00Z"
+  },
+  {
+    "Id": 2,
+    "amount": -24.99,
+    "categoryId": 2,
+    "merchant": "Netflix",
+    "note": "Monthly subscription",
+    "date": "2024-01-14T09:15:00Z"
+  },
+  {
+    "Id": 3,
+    "amount": -145.67,
+    "categoryId": 3,
+    "merchant": "Pacific Gas & Electric",
+    "note": "January utility bill",
+    "date": "2024-01-13T14:22:00Z"
+  },
+  {
+    "Id": 4,
+    "amount": -35.50,
+    "categoryId": 4,
+    "merchant": "Shell Station",
+    "note": "Gas fill-up",
+    "date": "2024-01-12T16:45:00Z"
+  },
+  {
+    "Id": 5,
+    "amount": -78.25,
+    "categoryId": 5,
+    "merchant": "The Cheesecake Factory",
+    "note": "Dinner with friends",
+    "date": "2024-01-11T19:30:00Z"
+  },
+  {
+    "Id": 6,
+    "amount": -124.99,
+    "categoryId": 6,
+    "merchant": "Target",
+    "note": "Household items",
+    "date": "2024-01-10T11:20:00Z"
+  },
+  {
+    "Id": 7,
+    "amount": -45.00,
+    "categoryId": 7,
+    "merchant": "CVS Pharmacy",
+    "note": "Prescription medication",
+    "date": "2024-01-09T08:15:00Z"
+  },
+  {
+    "Id": 8,
+    "amount": -67.89,
+    "categoryId": 1,
+    "merchant": "Trader Joe's",
+    "note": "Fresh produce and snacks",
+    "date": "2024-01-08T17:00:00Z"
+  },
+  {
+    "Id": 9,
+    "amount": -15.99,
+    "categoryId": 2,
+    "merchant": "Spotify",
+    "note": "Premium subscription",
+    "date": "2024-01-07T12:00:00Z"
+  },
+  {
+    "Id": 10,
+    "amount": -89.50,
+    "categoryId": 5,
+    "merchant": "Local Bistro",
+    "note": "Weekend brunch",
+    "date": "2024-01-06T10:45:00Z"
+  },
+  {
+    "Id": 11,
+    "amount": -156.78,
+    "categoryId": 6,
+    "merchant": "Amazon",
+    "note": "Electronics and books",
+    "date": "2024-01-05T15:30:00Z"
+  },
+  {
+    "Id": 12,
+    "amount": -23.45,
+    "categoryId": 4,
+    "merchant": "Metro Transit",
+    "note": "Monthly bus pass",
+    "date": "2024-01-04T07:20:00Z"
+  },
+  {
+    "Id": 13,
+    "amount": -198.34,
+    "categoryId": 1,
+    "merchant": "Costco",
+    "note": "Bulk shopping",
+    "date": "2024-01-03T13:15:00Z"
+  },
+  {
+    "Id": 14,
+    "amount": -42.60,
+    "categoryId": 5,
+    "merchant": "Starbucks",
+    "note": "Coffee and pastries",
+    "date": "2024-01-02T08:00:00Z"
+  },
+  {
+    "Id": 15,
+    "amount": -89.99,
+    "categoryId": 8,
+    "merchant": "Udemy",
+    "note": "Online course",
+    "date": "2024-01-01T20:30:00Z"
+  }
+]

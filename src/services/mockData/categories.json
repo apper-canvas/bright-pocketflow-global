@@ -1,0 +1,66 @@
+[
+  {
+    "Id": 1,
+    "name": "Groceries",
+    "icon": "ShoppingCart",
+    "budgetAmount": 600,
+    "spentAmount": 487.34,
+    "color": "#10B981"
+  },
+  {
+    "Id": 2,
+    "name": "Entertainment",
+    "icon": "Film",
+    "budgetAmount": 300,
+    "spentAmount": 245.67,
+    "color": "#8B5CF6"
+  },
+  {
+    "Id": 3,
+    "name": "Utilities",
+    "icon": "Zap",
+    "budgetAmount": 250,
+    "spentAmount": 198.45,
+    "color": "#F59E0B"
+  },
+  {
+    "Id": 4,
+    "name": "Transportation",
+    "icon": "Car",
+    "budgetAmount": 400,
+    "spentAmount": 356.78,
+    "color": "#3B82F6"
+  },
+  {
+    "Id": 5,
+    "name": "Dining Out",
+    "icon": "Utensils",
+    "budgetAmount": 350,
+    "spentAmount": 289.45,
+    "color": "#EF4444"
+  },
+  {
+    "Id": 6,
+    "name": "Shopping",
+    "icon": "ShoppingBag",
+    "budgetAmount": 500,
+    "spentAmount": 423.89,
+    "color": "#EC4899"
+  },
+  {
+    "Id": 7,
+    "name": "Healthcare",
+    "icon": "Heart",
+    "budgetAmount": 200,
+    "spentAmount": 156.23,
+    "color": "#06B6D4"
+  },
+  {
+    "Id": 8,
+    "name": "Education",
+    "icon": "BookOpen",
+    "budgetAmount": 150,
+    "spentAmount": 89.67,
+    "color": "#84CC16"
+  }
+]
