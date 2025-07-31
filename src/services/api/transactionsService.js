@@ -57,10 +57,9 @@ export const transactionsService = {
     const index = transactions.findIndex(t => t.Id === parseInt(id));
     if (index === -1) {
       throw new Error("Transaction not found");
-    }
+}
     
     transactions.splice(index, 1);
-transactions.splice(index, 1);
     return true;
   },
 
@@ -195,6 +194,11 @@ return filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
              transactionDate.getFullYear() === currentYear;
     });
     
-    return currentMonthTransactions.reduce((sum, t) => sum + t.amount, 0);
+return currentMonthTransactions.reduce((sum, t) => sum + t.amount, 0);
+  },
+
+  // Alias method for backward compatibility
+  async getTransactions() {
+    return this.getAll();
   }
 };
