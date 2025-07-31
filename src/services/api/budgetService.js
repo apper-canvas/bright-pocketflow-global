@@ -67,5 +67,30 @@ export const budgetService = {
     
     budgets.splice(index, 1);
     return true;
+},
+
+  async updateTotalBudget(id, totalBudget) {
+    await delay(350);
+    const index = budgets.findIndex(b => b.Id === parseInt(id));
+    if (index === -1) {
+      throw new Error("Budget not found");
+    }
+    
+    budgets[index] = { ...budgets[index], totalBudget };
+    return { ...budgets[index] };
+  },
+
+  async getCategoryBudgets() {
+    await delay(200);
+    // This would typically fetch category-specific budget data
+    // For now, return empty array as categories handle their own budgets
+    return [];
+  },
+
+  async updateCategoryBudget(categoryId, budgetAmount) {
+    await delay(250);
+    // This would update a specific category's budget allocation
+    // Implementation depends on data structure needs
+    return { categoryId, budgetAmount };
   }
 };
