@@ -10,11 +10,12 @@ import { categoriesService } from "@/services/api/categoriesService";
 import { transactionsService } from "@/services/api/transactionsService";
 
 const ExpenseModal = ({ isOpen, onClose, onExpenseAdded }) => {
-  const [categories, setCategories] = useState([]);
+const [categories, setCategories] = useState([]);
   const [formData, setFormData] = useState({
     amount: "",
     categoryId: "",
-    merchant: "",
+    description: "",
+    date: new Date().toISOString().split('T')[0], // Today's date in YYYY-MM-DD format
     note: ""
   });
   const [loading, setLoading] = useState(false);
@@ -24,10 +25,11 @@ const ExpenseModal = ({ isOpen, onClose, onExpenseAdded }) => {
     if (isOpen) {
       loadCategories();
       // Reset form when modal opens
-      setFormData({
+setFormData({
         amount: "",
         categoryId: "",
-        merchant: "",
+        description: "",
+        date: new Date().toISOString().split('T')[0],
         note: ""
       });
       setErrors({});
@@ -46,7 +48,7 @@ const ExpenseModal = ({ isOpen, onClose, onExpenseAdded }) => {
   const validateForm = () => {
     const newErrors = {};
 
-    if (!formData.amount || parseFloat(formData.amount) <= 0) {
+if (!formData.amount || parseFloat(formData.amount) <= 0) {
       newErrors.amount = "Please enter a valid amount";
     }
 
@@ -54,8 +56,12 @@ const ExpenseModal = ({ isOpen, onClose, onExpenseAdded }) => {
       newErrors.categoryId = "Please select a category";
     }
 
-    if (!formData.merchant.trim()) {
-      newErrors.merchant = "Please enter a merchant name";
+    if (!formData.description.trim()) {
+      newErrors.description = "Please enter a description";
+    }
+
+    if (!formData.date) {
+      newErrors.date = "Please select a date";
     }
 
     setErrors(newErrors);
@@ -71,12 +77,12 @@ const ExpenseModal = ({ isOpen, onClose, onExpenseAdded }) => {
 
     setLoading(true);
     try {
-      const expense = {
+const expense = {
         amount: -Math.abs(parseFloat(formData.amount)), // Negative for expenses
         categoryId: parseInt(formData.categoryId),
-        merchant: formData.merchant.trim(),
+        merchant: formData.description.trim(),
         note: formData.note.trim(),
-        date: new Date().toISOString()
+        date: new Date(formData.date).toISOString()
       };
 
       const newTransaction = await transactionsService.create(expense);
@@ -142,8 +148,8 @@ const ExpenseModal = ({ isOpen, onClose, onExpenseAdded }) => {
             </div>
           </div>
 
-          {/* Form */}
-          <form onSubmit={handleSubmit} className="p-6 space-y-4">
+{/* Form */}
+          <form onSubmit={handleSubmit} className="p-6 space-y-5">
             <Input
               label="Amount"
               type="number"
@@ -154,6 +160,14 @@ const ExpenseModal = ({ isOpen, onClose, onExpenseAdded }) => {
               error={errors.amount}
               placeholder="0.00"
               className="text-lg font-semibold"
+            />
+
+            <Input
+              label="Description"
+              value={formData.description}
+              onChange={(e) => handleInputChange("description", e.target.value)}
+              error={errors.description}
+              placeholder="What did you buy?"
             />
 
             <Select
@@ -171,18 +185,18 @@ const ExpenseModal = ({ isOpen, onClose, onExpenseAdded }) => {
             </Select>
 
             <Input
-              label="Merchant"
-              value={formData.merchant}
-              onChange={(e) => handleInputChange("merchant", e.target.value)}
-              error={errors.merchant}
-              placeholder="Where did you spend?"
+              label="Date"
+              type="date"
+              value={formData.date}
+              onChange={(e) => handleInputChange("date", e.target.value)}
+              error={errors.date}
             />
 
             <Input
-              label="Note (Optional)"
+              label="Notes (Optional)"
               value={formData.note}
               onChange={(e) => handleInputChange("note", e.target.value)}
-              placeholder="Add a note..."
+              placeholder="Add any additional details..."
             />
 
             {/* Actions */}

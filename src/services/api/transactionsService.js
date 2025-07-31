@@ -55,9 +55,9 @@ export const transactionsService = {
   async delete(id) {
     await delay(300);
     const index = transactions.findIndex(t => t.Id === parseInt(id));
-    if (index === -1) {
+if (index === -1) {
       throw new Error("Transaction not found");
-}
+    }
     
     transactions.splice(index, 1);
     return true;

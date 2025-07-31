@@ -62,11 +62,8 @@ const currentMonth = getCurrentMonth();
     }
   };
 
-  const handleExpenseAdded = async (newExpense) => {
+const handleExpenseAdded = async (newExpense) => {
     try {
-      // Add the new expense
-      await transactionsService.addTransaction(newExpense);
-      
       // Refresh dashboard data to reflect the new expense
       await loadDashboardData();
       

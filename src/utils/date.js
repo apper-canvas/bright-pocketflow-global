@@ -28,10 +28,16 @@ export const getCurrentMonthDisplay = () => {
 };
 
 export const formatDateForInput = (dateString) => {
-  const date = parseISO(dateString);
+  if (!dateString) return '';
+  const date = typeof dateString === 'string' ? parseISO(dateString) : dateString;
   return format(date, "yyyy-MM-dd");
 };
 
+export const formatDateFromInput = (inputDateString) => {
+  if (!inputDateString) return new Date().toISOString();
+  const date = new Date(inputDateString);
+  return date.toISOString();
+};
 export const parseDate = (dateString) => {
   return parseISO(dateString);
 };
