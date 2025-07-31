@@ -16,6 +16,7 @@ export const getBudgetStatus = (spent, budget) => {
   
   if (percentage >= 100) return "over";
   if (percentage >= 85) return "warning";
+  if (percentage >= 75) return "alert";
   return "good";
 };
 

@@ -9,22 +9,22 @@ import { budgetService } from "@/services/api/budgetService";
 import { categoriesService } from "@/services/api/categoriesService";
 import { transactionsService } from "@/services/api/transactionsService";
 import { getCurrentMonth } from "@/utils/date";
+import { notificationService } from "@/services/notificationService";
 
 const Dashboard = () => {
   const [budget, setBudget] = useState(null);
   const [categories, setCategories] = useState([]);
   const [transactions, setTransactions] = useState([]);
-  const [loading, setLoading] = useState(true);
+const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [previousCategories, setPreviousCategories] = useState([]);
 
   useEffect(() => {
     loadDashboardData();
   }, []);
-
-  const loadDashboardData = async () => {
+const loadDashboardData = async () => {
     setLoading(true);
     setError("");
-    
     try {
       const [budgetData, categoriesData, transactionsData] = await Promise.all([
         budgetService.getCurrentMonthBudget(),
@@ -70,6 +70,14 @@ const Dashboard = () => {
       .filter(t => t.amount < 0)
       .reduce((sum, t) => sum + t.amount, 0)
   );
+
+// Check for budget alerts when categories change
+  useEffect(() => {
+    if (categories.length > 0 && !loading) {
+      notificationService.checkBudgetAlerts(categories, previousCategories);
+      setPreviousCategories(categories);
+    }
+  }, [categories, loading]);
 
   return (
     <div className="space-y-6">
