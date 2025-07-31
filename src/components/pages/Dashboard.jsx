@@ -15,29 +15,48 @@ const Dashboard = () => {
   const [budget, setBudget] = useState(null);
   const [categories, setCategories] = useState([]);
   const [transactions, setTransactions] = useState([]);
-const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [previousCategories, setPreviousCategories] = useState([]);
 
   useEffect(() => {
     loadDashboardData();
   }, []);
-const loadDashboardData = async () => {
-    setLoading(true);
-    setError("");
-    try {
-      const [budgetData, categoriesData, transactionsData] = await Promise.all([
-        budgetService.getCurrentMonthBudget(),
-        categoriesService.getAll(),
-        transactionsService.getRecent(7)
-      ]);
 
-      setBudget(budgetData);
+  useEffect(() => {
+    if (categories.length > 0 && !loading) {
+      notificationService.checkBudgetAlerts(categories, previousCategories);
+      setPreviousCategories(categories);
+    }
+  }, [categories, loading]);
+
+  const loadDashboardData = async () => {
+    try {
+      setLoading(true);
+      setError("");
+      
+      const currentMonth = getCurrentMonth();
+      
+      // Load budget data
+      const budgetData = await budgetService.getBudget(currentMonth);
+      if (budgetData) {
+        setBudget(budgetData);
+      }
+      
+      // Load categories with their spending
+      const categoriesData = await categoriesService.getCategoriesWithSpending(currentMonth);
       setCategories(categoriesData);
+      
+      // Load recent transactions
+      const transactionsData = await transactionsService.getTransactions({
+        month: currentMonth,
+        limit: 10
+      });
       setTransactions(transactionsData);
+      
     } catch (err) {
-      console.error("Failed to load dashboard data:", err);
-      setError("Failed to load dashboard data");
+      console.error('Error loading dashboard data:', err);
+      setError('Failed to load dashboard data. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -45,39 +64,35 @@ const loadDashboardData = async () => {
 
   const handleExpenseAdded = async (newExpense) => {
     try {
-      // Reload all data to get updated totals
+      // Add the new expense
+      await transactionsService.addTransaction(newExpense);
+      
+      // Refresh dashboard data to reflect the new expense
       await loadDashboardData();
-    } catch (error) {
-      console.error("Failed to refresh data after adding expense:", error);
+      
+      // Show success notification
+      notificationService.showSuccess('Expense added successfully!');
+    } catch (err) {
+      console.error('Error adding expense:', err);
+      notificationService.showError('Failed to add expense. Please try again.');
     }
   };
 
+  // Calculate total spent from categories
+  const totalSpent = categories.reduce((sum, category) => sum + (category.spent || 0), 0);
+
   if (loading) {
-    return <Loading variant="skeleton" />;
+    return <Loading message="Loading your dashboard..." />;
   }
 
   if (error) {
     return (
       <Error 
-        message="Failed to load your budget dashboard" 
+        message={error}
         onRetry={loadDashboardData}
       />
     );
   }
-
-  const totalSpent = Math.abs(
-    transactions
-      .filter(t => t.amount < 0)
-      .reduce((sum, t) => sum + t.amount, 0)
-  );
-
-// Check for budget alerts when categories change
-  useEffect(() => {
-    if (categories.length > 0 && !loading) {
-      notificationService.checkBudgetAlerts(categories, previousCategories);
-      setPreviousCategories(categories);
-    }
-  }, [categories, loading]);
 
   return (
     <div className="space-y-6">
