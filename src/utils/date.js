@@ -26,3 +26,12 @@ export const getCurrentMonth = () => {
 export const getCurrentMonthDisplay = () => {
   return format(new Date(), "MMMM yyyy");
 };
+
+export const formatDateForInput = (dateString) => {
+  const date = parseISO(dateString);
+  return format(date, "yyyy-MM-dd");
+};
+
+export const parseDate = (dateString) => {
+  return parseISO(dateString);
+};

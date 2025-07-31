@@ -60,6 +60,58 @@ export const transactionsService = {
     }
     
     transactions.splice(index, 1);
+transactions.splice(index, 1);
     return true;
+  },
+
+  async getByDateRange(startDate, endDate) {
+    await delay(300);
+    return transactions
+      .filter(t => {
+        const transactionDate = new Date(t.date);
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+        return transactionDate >= start && transactionDate <= end;
+      })
+      .sort((a, b) => new Date(b.date) - new Date(a.date));
+  },
+
+  async searchTransactions(searchTerm) {
+    await delay(250);
+    const term = searchTerm.toLowerCase();
+    return transactions
+      .filter(t => 
+        t.merchant.toLowerCase().includes(term) ||
+        (t.note && t.note.toLowerCase().includes(term))
+      )
+      .sort((a, b) => new Date(b.date) - new Date(a.date));
+  },
+
+  async getByFilter({ searchTerm, categoryId, startDate, endDate }) {
+    await delay(300);
+    let filtered = [...transactions];
+
+    if (searchTerm) {
+      const term = searchTerm.toLowerCase();
+      filtered = filtered.filter(t => 
+        t.merchant.toLowerCase().includes(term) ||
+        (t.note && t.note.toLowerCase().includes(term))
+      );
+    }
+
+    if (categoryId) {
+      filtered = filtered.filter(t => t.categoryId === parseInt(categoryId));
+    }
+
+    if (startDate && endDate) {
+      filtered = filtered.filter(t => {
+        const transactionDate = new Date(t.date);
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+        return transactionDate >= start && transactionDate <= end;
+      });
+    }
+
+    return filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
   }
 };
